@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public class Pool<T> where T : IPoolable
@@ -34,7 +35,7 @@ public class Pool<T> where T : IPoolable
             }
         }
 
-        return default;
+        throw new Exception("there is no free elements");
     }
 
 }
