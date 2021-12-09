@@ -11,7 +11,6 @@ public class BallCreator : MonoBehaviour, IPauseable
     private int _ballsAmount;
     [SerializeField]
     private Transform _spawnPos;
-    private float _randomScope;
     [SerializeField]
     private float _timeBtwSpawn;
     [SerializeField]
@@ -62,12 +61,16 @@ public class BallCreator : MonoBehaviour, IPauseable
         {
             _lastTick += _timeBtwSpawn;
 
-            var ball = _ballPool.GetElement();
-            ball.Init(_randomColor.GetRandom(), _ballsSpeed, 1, 1);
-            ball.SetPosition(_randomPos.GetRandomPosition(_spawnPos.position));
+            CreateBall();
     
             _ballsSpeed += _speedUpdateStep;
         }
+    }
+    private void CreateBall()
+    {
+        var ball = _ballPool.GetElement();
+        ball.Init(_randomColor.GetRandom(), _ballsSpeed, 1, 1);
+        ball.SetPosition(_randomPos.GetRandomPosition(_spawnPos.position));
     }
     
 }
