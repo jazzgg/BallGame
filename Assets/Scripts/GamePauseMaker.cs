@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class GamePauseMaker
+public class GamePauseMaker : IDIsposable
 {
     private IStopEventProvider _stopEventProvider;
     private IResumeEventProvider _resumeEventProvider;
@@ -16,7 +16,7 @@ public class GamePauseMaker
         _resumeEventProvider.OnResume += Resume;
         _stopEventProvider.OnStop += Stop;
     }
-    public void AddStopable(IPauseable stopable)
+    public void AddPauseable(IPauseable stopable)
     {
         _stopables.Add(stopable);
     }

@@ -9,27 +9,27 @@ public class Game : MonoBehaviour
     [SerializeField]
     private Player _player;
 
-    private GamePauseMaker _gameStoper;
+    private GamePauseMaker _gamePauseMaker;
     private ClickHandler _clickHandler;
 
     private void Start()
     {
         InitializeServices();
         AddClickHandleables();
-        AddStopables();
+        AddPauseables();
     }
     private void AddClickHandleables()
     {
         _clickHandler.AddClickHandleable(_player);
         _clickHandler.AddClickHandleable(_ballServicesManager.BallActiveManager);
     }
-    private void AddStopables()
+    private void AddPauseables()
     {
-        _gameStoper.AddStopable(_ballServicesManager.BallCreator);
-        _gameStoper.AddStopable(_ballServicesManager.BallDetector);
-        _gameStoper.AddStopable(_ballServicesManager.BallActiveManager);
-        _gameStoper.AddStopable(_loseManager);
-        _gameStoper.AddStopable(_player);
+        _gamePauseMaker.AddPauseable(_ballServicesManager.BallCreator);
+        _gamePauseMaker.AddPauseable(_ballServicesManager.BallDetector);
+        _gamePauseMaker.AddPauseable(_ballServicesManager.BallActiveManager);
+        _gamePauseMaker.AddPauseable(_loseManager);
+        _gamePauseMaker.AddPauseable(_player);
     }
     private void InitializeServices()
     {
@@ -37,12 +37,16 @@ public class Game : MonoBehaviour
         _player.Init();
         _loseManager.Init(_player);
 
-        _gameStoper = new GamePauseMaker(_player, _loseManager);
+        _gamePauseMaker = new GamePauseMaker(_player, _loseManager);
         _clickHandler = new ClickHandler(_ballServicesManager.BallDetector, _ballServicesManager.BallDetector);
+    }
+    private void Dispose()
+    {
+        _clickHandler.Dispose();
+        _gamePauseMaker.Dispose();
     }
     private void OnDestroy()
     {
-        _clickHandler.Dispose();
-        _gameStoper.Dispose();
+        Dispose();
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class ClickHandler 
+public class ClickHandler : IDIsposable
 {
     private List<IClickHandleable> _clickHandleables;
     private IClickEventProvider _clickEventProvider;
